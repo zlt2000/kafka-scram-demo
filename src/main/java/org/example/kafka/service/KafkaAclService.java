@@ -26,13 +26,16 @@ import java.util.concurrent.ExecutionException;
 public class KafkaAclService {
     private final KafkaAdminClient kafkaAdminClient;
 
-    public void createAcl(String account, String topicName, String consumerGroup) throws ExecutionException, InterruptedException {
+    /**
+     * 配置用户只读权限
+     */
+    public void createAcl(String account, String topicName, String consumerGroup) {
         AclBinding aclBindingTopic = genAclBinding(account, ResourceType.TOPIC, topicName, AclOperation.READ);
         AclBinding aclBindingGroup = genAclBinding(account, ResourceType.GROUP, consumerGroup, AclOperation.READ);
         kafkaAdminClient.createAcls(List.of(aclBindingTopic, aclBindingGroup));
     }
 
-    public void delAcl(String account, String topicName, String consumerGroup) throws ExecutionException, InterruptedException {
+    public void delAcl(String account, String topicName, String consumerGroup) {
         AclBindingFilter aclBindingTopic = genAclBindingFilter(account, ResourceType.TOPIC, topicName, AclOperation.READ);
         AclBindingFilter aclBindingGroup = genAclBindingFilter(account, ResourceType.GROUP, consumerGroup, AclOperation.READ);
         kafkaAdminClient.deleteAcls(List.of(aclBindingTopic, aclBindingGroup));

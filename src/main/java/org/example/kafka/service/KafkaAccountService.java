@@ -21,6 +21,9 @@ import java.util.concurrent.ExecutionException;
 public class KafkaAccountService {
     private final KafkaAdminClient kafkaAdminClient;
 
+    /**
+     * 创建用户
+     */
     public void createUser(String userName, String password) throws ExecutionException, InterruptedException {
         // 构造Scram认证机制信息
         ScramCredentialInfo info = new ScramCredentialInfo(ScramMechanism.SCRAM_SHA_256, 8192);
